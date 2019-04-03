@@ -20,25 +20,30 @@
 #include "bmem.h"
 #include "pipe.h"
 
-struct os_process_pipe {
+struct os_process_pipe
+{
 	bool read_pipe;
 	FILE *file;
 };
 
 os_process_pipe_t *os_process_pipe_create(const char *cmd_line,
-		const char *type)
+										  const char *type)
 {
+	printf(cmd_line);
+
 	struct os_process_pipe pipe = {0};
 	struct os_process_pipe *out;
 
-	if (!cmd_line || !type) {
+	if (!cmd_line || !type)
+	{
 		return NULL;
 	}
 
 	pipe.file = popen(cmd_line, type);
 	pipe.read_pipe = *type == 'r';
 
-	if (pipe.file == (FILE*)-1 || pipe.file == NULL) {
+	if (pipe.file == (FILE *)-1 || pipe.file == NULL)
+	{
 		return NULL;
 	}
 
@@ -51,7 +56,8 @@ int os_process_pipe_destroy(os_process_pipe_t *pp)
 {
 	int ret = 0;
 
-	if (pp) {
+	if (pp)
+	{
 		int status = pclose(pp->file);
 		if (WIFEXITED(status))
 			ret = (int)(char)WEXITSTATUS(status);
@@ -63,10 +69,12 @@ int os_process_pipe_destroy(os_process_pipe_t *pp)
 
 size_t os_process_pipe_read(os_process_pipe_t *pp, uint8_t *data, size_t len)
 {
-	if (!pp) {
+	if (!pp)
+	{
 		return 0;
 	}
-	if (!pp->read_pipe) {
+	if (!pp->read_pipe)
+	{
 		return 0;
 	}
 
@@ -74,12 +82,14 @@ size_t os_process_pipe_read(os_process_pipe_t *pp, uint8_t *data, size_t len)
 }
 
 size_t os_process_pipe_write(os_process_pipe_t *pp, const uint8_t *data,
-		size_t len)
+							 size_t len)
 {
-	if (!pp) {
+	if (!pp)
+	{
 		return 0;
 	}
-	if (pp->read_pipe) {
+	if (pp->read_pipe)
+	{
 		return 0;
 	}
 
