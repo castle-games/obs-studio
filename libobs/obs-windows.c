@@ -58,20 +58,18 @@ void add_default_module_paths(void)
 		obs_add_module_path(module_bin[i], module_data[i]);
 }
 
+const char *CASTLE_OBS_INSTALL_DATA_PATH = "";
+void castle_obs_set_data_path(const char *path) {
+	CASTLE_OBS_INSTALL_DATA_PATH = path;
+}
+
 /* on windows, points to [base directory]/data/libobs */
 char *find_libobs_data_file(const char *file)
 {
 	struct dstr path;
-	dstr_init(&path);
-
-	if (check_path(file, "data/libobs/", &path))
-		return path.array;
-
-	if (check_path(file, "../../data/libobs/", &path))
-		return path.array;
-
-	dstr_free(&path);
-	return NULL;
+	dstr_init_copy(&path, CASTLE_OBS_INSTALL_DATA_PATH);
+	dstr_cat(&path, file);
+	return path.array;
 }
 
 static void log_processor_info(void)
