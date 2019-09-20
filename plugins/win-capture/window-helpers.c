@@ -77,7 +77,8 @@ bool get_window_exe(struct dstr *name, HWND window)
 	DWORD       id;
 
 	GetWindowThreadProcessId(window, &id);
-	if (id == GetCurrentProcessId())
+	// Castle change from == to !=. Only want windows in the current process
+	if (id != GetCurrentProcessId())
 		return false;
 
 	process = open_process(PROCESS_QUERY_LIMITED_INFORMATION, false, id);
@@ -381,6 +382,9 @@ static int window_rating(HWND window,
 		val = exe_matches ? title_val : 0x7FFFFFFF;
 	}
 
+	// castle debug info
+    // blog(LOG_INFO, "%s %s %s - %s %s %s - %d %d %i: %i", cur_exe.array, cur_class.array, cur_title.array, exe, class, title, exe_matches, class_matches, title_val, val);
+
 	dstr_free(&cur_class);
 	dstr_free(&cur_title);
 	dstr_free(&cur_exe);
@@ -418,6 +422,9 @@ HWND find_window(enum window_search_mode mode,
 
 		window = next_window(window, mode, &parent, use_findwindowex);
 	}
+
+	// castle debug info
+    // blog(LOG_INFO, "find window. best rating: %i", best_rating);
 
 	return best_window;
 }
