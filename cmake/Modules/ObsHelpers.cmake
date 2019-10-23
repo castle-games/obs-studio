@@ -117,9 +117,9 @@ function(obs_finish_bundle)
 	endif()
 
 	install(CODE
-		"if(DEFINED ENV{FIXUP_BUNDLE})
+		"
 			execute_process(COMMAND \"${CMAKE_SOURCE_DIR}/cmake/osxbundle/fixup_bundle.sh\" . bin WORKING_DIRECTORY \"\${CMAKE_INSTALL_PREFIX}\")
-		endif()")
+		")
 endfunction()
 
 function(obs_generate_multiarch_installer)

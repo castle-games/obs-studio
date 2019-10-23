@@ -51,4 +51,3 @@ done
 for target in $TARGETS; do
 	install_name_tool ${INTOOL_CALL[@]} "$target"
 done
-

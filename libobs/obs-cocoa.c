@@ -1731,7 +1731,7 @@ static bool mouse_button_pressed(obs_key_t key, bool *pressed)
 bool obs_hotkeys_platform_is_pressed(obs_hotkeys_platform_t *plat,
 									 obs_key_t key)
 {
-	bool mouse_pressed = false;
+	/*bool mouse_pressed = false;
 	if (mouse_button_pressed(key, &mouse_pressed))
 		return mouse_pressed;
 
@@ -1765,7 +1765,7 @@ bool obs_hotkeys_platform_is_pressed(obs_hotkeys_platform_t *plat,
 			return true;
 
 		i += 1;
-	}
+	}*/
 
 	return false;
 }
